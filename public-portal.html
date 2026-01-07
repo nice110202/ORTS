@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Public Portal - Ordinance & Resolution Tracking System | City of Valenzuela</title>
+    <meta name="description" content="Browse and search legislative documents from the City Government of Valenzuela">
+    <meta name="keywords" content="Valenzuela, Ordinances, Resolutions, Legislative Documents, Public Records">
+    <link rel="icon" type="image/png" href="LogoV.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+        }
+
+        .document-card {
+            transition: all 0.3s ease;
+        }
+
+        .document-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.6s ease-out;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            animation: fade-in 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="LogoV.webp" alt="Valenzuela Logo" class="w-12 h-12 object-contain">
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">ORTS Public Portal</h1>
+                        <p class="text-xs text-gray-600">City of Valenzuela</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-sm text-gray-600 hover:text-red-600 transition">Home</a>
+                    <a href="login.html"
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm font-medium">
+                        <i class="bi bi-box-arrow-in-right mr-1"></i>Staff Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Legislative Documents Portal</h1>
+                <p class="text-xl text-red-100 mb-8">Browse ordinances, resolutions, and public records from the City of
+                    Valenzuela</p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input type="text" id="hero-search"
+                            placeholder="Search documents by title, reference number, or keywords..."
+                            class="w-full px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-red-300">
+                        <button onclick="performSearch()"
+                            class="absolute right-2 top-2 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+                            <i class="bi bi-search mr-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition">
+                <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-file-earmark-text text-red-600 text-3xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-900" id="stat-total">0</h3>
+                <p class="text-gray-600">Total Documents</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-journal-text text-blue-600 text-3xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-900" id="stat-ordinances">0</h3>
+                <p class="text-gray-600">Ordinances</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-file-earmark-check text-green-600 text-3xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-900" id="stat-resolutions">0</h3>
+                <p class="text-gray-600">Resolutions</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <!-- Filters -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">Filter Documents</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <select id="filter-type" onchange="applyFilters()"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <option value="">All Types</option>
+                    <option value="ordinance">Ordinances</option>
+                    <option value="resolution">Resolutions</option>
+                    <option value="session">Session Minutes</option>
+                    <option value="agenda">Agenda</option>
+                </select>
+                <select id="filter-year" onchange="applyFilters()"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <option value="">All Years</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                </select>
+                <select id="filter-status" onchange="applyFilters()"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <option value="">All Status</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <button onclick="resetFilters()"
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    <i class="bi bi-arrow-clockwise mr-2"></i>Reset Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Documents Grid -->
+        <div id="documents-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Documents will be loaded here -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-16">
+            <i class="bi bi-inbox text-6xl text-gray-300 mb-4"></i>
+            <p class="text-xl text-gray-600">No documents found</p>
+            <p class="text-gray-500">Try adjusting your search or filters</p>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="mt-8 flex justify-center items-center space-x-2">
+            <!-- Pagination will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Document View Modal -->
+    <div id="document-modal" class="modal">
+        <div class="modal-content">
+            <div
+                class="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
+                <h3 class="text-xl font-bold" id="modal-title">Document Details</h3>
+                <button onclick="closeModal()" class="text-white hover:text-gray-200 text-2xl">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-6">
+                <!-- Document details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="LogoV.webp" alt="Valenzuela" class="w-12 h-12">
+                        <div>
+                            <h3 class="font-bold text-lg">City of Valenzuela</h3>
+                            <p class="text-gray-400 text-sm">Legislative Office</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">Making legislative documents accessible to all citizens</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Home</a></li>
+                        <li><a href="login.html" class="hover:text-white transition">Staff Login</a></li>
+                        <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contact Information</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><i class="bi bi-geo-alt mr-2"></i>Valenzuela City Hall</li>
+                        <li><i class="bi bi-telephone mr-2"></i>(02) 123-4567</li>
+                        <li><i class="bi bi-envelope mr-2"></i>legislative@valenzuela.gov.ph</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2026 City Government of Valenzuela. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample Data - In production, this would come from an API
+        const publicDocuments = [
+            {
+                id: 1,
+                reference: 'ORD-2025-001',
+                title: 'Annual Budget Ordinance 2025',
+                type: 'ordinance',
+                status: 'approved',
+                date: '2025-01-15',
+                description: 'Annual budget allocation for fiscal year 2025',
+                year: '2025'
+            },
+            {
+                id: 2,
+                reference: 'RES-2025-042',
+                title: 'COVID-19 Response Resolution',
+                type: 'resolution',
+                status: 'approved',
+                date: '2025-02-01',
+                description: 'Resolution for enhanced COVID-19 response measures',
+                year: '2025'
+            },
+            {
+                id: 3,
+                reference: 'ORD-2025-002',
+                title: 'Traffic Management Ordinance',
+                type: 'ordinance',
+                status: 'approved',
+                date: '2025-03-10',
+                description: 'Ordinance regulating traffic flow in major thoroughfares',
+                year: '2025'
+            },
+            {
+                id: 4,
+                reference: 'RES-2025-043',
+                title: 'Environmental Protection Resolution',
+                type: 'resolution',
+                status: 'approved',
+                date: '2025-04-05',
+                description: 'Resolution promoting environmental conservation initiatives',
+                year: '2025'
+            },
+            {
+                id: 5,
+                reference: 'SM-2025-11',
+                title: 'Regular Session Minutes - November 2025',
+                type: 'session',
+                status: 'approved',
+                date: '2025-11-20',
+                description: 'Minutes of the regular session held on November 20, 2025',
+                year: '2025'
+            },
+            {
+                id: 6,
+                reference: 'ORD-2025-003',
+                title: 'Business Permit Ordinance',
+                type: 'ordinance',
+                status: 'approved',
+                date: '2025-05-15',
+                description: 'Ordinance regulating business permits and licenses',
+                year: '2025'
+            }
+        ];
+
+        let filteredDocuments = [...publicDocuments];
+        const itemsPerPage = 9;
+        let currentPage = 1;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStats();
+            applyFilters();
+        });
+
+        function updateStats() {
+            const total = publicDocuments.length;
+            const ordinances = publicDocuments.filter(d => d.type === 'ordinance').length;
+            const resolutions = publicDocuments.filter(d => d.type === 'resolution').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-ordinances').textContent = ordinances;
+            document.getElementById('stat-resolutions').textContent = resolutions;
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('hero-search').value.toLowerCase();
+
+            filteredDocuments = publicDocuments.filter(doc => {
+                return doc.title.toLowerCase().includes(searchTerm) ||
+                    doc.reference.toLowerCase().includes(searchTerm) ||
+                    doc.description.toLowerCase().includes(searchTerm);
+            });
+
+            currentPage = 1;
+            renderDocuments();
+        }
+
+        function applyFilters() {
+            const typeFilter = document.getElementById('filter-type').value;
+            const yearFilter = document.getElementById('filter-year').value;
+            const statusFilter = document.getElementById('filter-status').value;
+
+            filteredDocuments = publicDocuments.filter(doc => {
+                const matchesType = !typeFilter || doc.type === typeFilter;
+                const matchesYear = !yearFilter || doc.year === yearFilter;
+                const matchesStatus = !statusFilter || doc.status === statusFilter;
+
+                return matchesType && matchesYear && matchesStatus;
+            });
+
+            currentPage = 1;
+            renderDocuments();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-type').value = '';
+            document.getElementById('filter-year').value = '';
+            document.getElementById('filter-status').value = '';
+            document.getElementById('hero-search').value = '';
+
+            filteredDocuments = [...publicDocuments];
+            currentPage = 1;
+            renderDocuments();
+        }
+
+        function renderDocuments() {
+            const container = document.getElementById('documents-container');
+            const noResults = document.getElementById('no-results');
+
+            if (filteredDocuments.length === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageDocuments = filteredDocuments.slice(startIndex, endIndex);
+
+            const html = pageDocuments.map(doc => `
+                <div class="bg-white rounded-xl shadow-md document-card overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${getTypeColor(doc.type)}">
+                                ${capitalizeFirst(doc.type)}
+                            </span>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(doc.status)}">
+                                ${capitalizeFirst(doc.status)}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">${doc.title}</h3>
+                        <p class="text-sm text-gray-600 mb-3">${doc.reference}</p>
+                        <p class="text-sm text-gray-700 mb-4 line-clamp-2">${doc.description}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">
+                                <i class="bi bi-calendar3 mr-1"></i>${formatDate(doc.date)}
+                            </span>
+                            <button onclick="viewDocument(${doc.id})" class="text-red-600 hover:text-red-700 font-medium text-sm">
+                                View Details <i class="bi bi-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredDocuments.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = `
+                <button onclick="changePage(${currentPage - 1})" 
+                    ${currentPage === 1 ? 'disabled' : ''} 
+                    class="px-4 py-2 rounded-lg border ${currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50'}">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `
+                        <button onclick="changePage(${i})" 
+                            class="px-4 py-2 rounded-lg ${i === currentPage ? 'bg-red-600 text-white' : 'bg-white hover:bg-gray-50'}">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += '<span class="px-2">...</span>';
+                }
+            }
+
+            html += `
+                <button onclick="changePage(${currentPage + 1})" 
+                    ${currentPage === totalPages ? 'disabled' : ''} 
+                    class="px-4 py-2 rounded-lg border ${currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white hover:bg-gray-50'}">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            `;
+
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredDocuments.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+
+            currentPage = page;
+            renderDocuments();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function viewDocument(docId) {
+            const doc = publicDocuments.find(d => d.id === docId);
+            if (!doc) return;
+
+            const modal = document.getElementById('document-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            modalTitle.textContent = doc.title;
+            modalBody.innerHTML = `
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Reference Number</p>
+                            <p class="font-semibold text-gray-900">${doc.reference}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Document Type</p>
+                            <p class="font-semibold text-gray-900">${capitalizeFirst(doc.type)}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Status</p>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(doc.status)}">
+                                ${capitalizeFirst(doc.status)}
+                            </span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Date</p>
+                            <p class="font-semibold text-gray-900">${formatDate(doc.date)}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Description</p>
+                        <p class="text-gray-900">${doc.description}</p>
+                    </div>
+                    <div class="pt-4 border-t">
+                        <button onclick="downloadDocument(${doc.id})" class="w-full bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">
+                            <i class="bi bi-download mr-2"></i>Download Document
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('document-modal').style.display = 'none';
+        }
+
+        function downloadDocument(docId) {
+            const doc = publicDocuments.find(d => d.id === docId);
+            alert(`Downloading: ${doc.reference} - ${doc.title}\n\nIn a production system, this would download the actual PDF file.`);
+        }
+
+        function getTypeColor(type) {
+            const colors = {
+                'ordinance': 'bg-blue-100 text-blue-700',
+                'resolution': 'bg-green-100 text-green-700',
+                'session': 'bg-purple-100 text-purple-700',
+                'agenda': 'bg-yellow-100 text-yellow-700'
+            };
+            return colors[type] || 'bg-gray-100 text-gray-700';
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'approved': 'bg-green-100 text-green-700',
+                'pending': 'bg-yellow-100 text-yellow-700',
+                'draft': 'bg-gray-100 text-gray-700'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-700';
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('document-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Search on Enter key
+        document.getElementById('hero-search').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+
+</html>

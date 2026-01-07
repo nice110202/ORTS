@@ -1,0 +1,1247 @@
+/* LRMS System Styles - Updated with All Latest Changes */
+
+/* =====================
+   CUSTOM ANIMATIONS
+   ===================== */
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slide-in-left 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slide-in-right 0.6s ease-out;
+}
+
+.animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Animation delays for staggered effects */
+.animation-delay-100 {
+    animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+    animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+    animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+    animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+    animation-delay: 600ms;
+}
+
+.animation-delay-700 {
+    animation-delay: 700ms;
+}
+
+/* =====================
+   SIDEBAR STYLES
+   ===================== */
+
+/* Sidebar Base - Smooth slide transitions */
+.sidebar {
+    position: relative;
+    width: 256px;
+    flex-shrink: 0;
+    transform: translateX(0);
+    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+    will-change: transform, width, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Desktop: When sidebar is hidden, slide it out smoothly */
+@media (min-width: 768px) {
+    .sidebar.hidden {
+        transform: translateX(-100%);
+        width: 0;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+}
+
+/* Main content adjustment when sidebar is hidden */
+#main-content {
+    transition: margin-left 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: margin-left, width;
+}
+
+#main-content.fullwidth {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+/* Sidebar collapsed state */
+.sidebar.collapsed {
+    width: 80px !important;
+}
+
+.sidebar.collapsed .sidebar-text,
+.sidebar.collapsed .nav-item span {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Hamburger toggle icon animation */
+.sidebar-toggle-icon {
+    transition: transform 0.25s ease;
+    display: inline-block;
+}
+
+.sidebar-toggle-icon.rotate {
+    transform: rotate(90deg);
+}
+
+/* =====================
+   BUTTON STYLES
+   ===================== */
+
+.btn-primary {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #b91c1c;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline {
+    border: 2px solid #dc2626;
+    color: #dc2626;
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-outline:hover {
+    background-color: #dc2626;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-outline:active {
+    transform: translateY(0);
+}
+
+/* =====================
+   ENHANCED PROPOSAL UI STYLES
+   ===================== */
+
+/* Enhanced Form Inputs */
+.input-field-enhanced {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.875rem;
+    background: white;
+}
+
+.input-field-enhanced:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+    transform: translateY(-1px);
+}
+
+.input-field-enhanced:hover {
+    border-color: #d1d5db;
+}
+
+/* Form Group Enhanced */
+.form-group-enhanced {
+    position: relative;
+}
+
+.form-group-enhanced label {
+    display: flex;
+    align-items: center;
+}
+
+/* Enhanced Buttons */
+.btn-primary-enhanced {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.39);
+    transform: translateY(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px 0 rgba(220, 38, 38, 0.5);
+}
+
+.btn-primary-enhanced:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px 0 rgba(220, 38, 38, 0.39);
+}
+
+.btn-outline-enhanced {
+    border: 2px solid #dc2626;
+    color: #dc2626;
+    background-color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    transform: translateY(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-outline-enhanced:hover {
+    background-color: #dc2626;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px 0 rgba(220, 38, 38, 0.3);
+}
+
+.btn-outline-enhanced:active {
+    transform: translateY(0);
+}
+
+/* File Upload Zone */
+.file-upload-zone {
+    position: relative;
+    border: 2px dashed #d1d5db;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.file-upload-zone:hover {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+}
+
+.file-upload-label {
+    display: block;
+    cursor: pointer;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.file-upload-label:hover i {
+    transform: scale(1.1) translateY(-4px);
+}
+
+/* Enhanced Checkbox Styles */
+.checkbox-enhanced {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    background: white;
+    border: 2px solid transparent;
+}
+
+.checkbox-enhanced:hover {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+}
+
+.form-checkbox-enhanced {
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    user-select: none;
+}
+
+/* Glassmorphism Effect */
+.bg-white\/90 {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* =====================
+   NAVIGATION ITEMS
+   ===================== */
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #e0e7ff;
+    border-radius: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    font-size: 0.875rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: white;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover::before {
+    transform: scaleY(1);
+}
+
+.nav-item:hover {
+    background-color: rgba(220, 38, 38, 0.4);
+    color: white;
+    transform: translateX(4px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item i {
+    margin-right: 0.75rem;
+    font-size: 1.125rem;
+    width: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover i {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.nav-item.active {
+    background-color: rgba(220, 38, 38, 0.5);
+    color: white;
+    font-weight: 600;
+
+    .sidebar {
+        /* Animation timing variables for smooth feel */
+        --sidebar-duration: .36s;
+        --sidebar-ease: cubic-bezier(.2, .9, .3, 1);
+
+        /* Ensure transform/opacity transitions on the sidebar itself so hide/show is a smooth slide */
+        transition: transform var(--sidebar-duration) var(--sidebar-ease),
+            opacity calc(var(--sidebar-duration) / 1.2) var(--sidebar-ease),
+            box-shadow calc(var(--sidebar-duration) / 1.6) ease;
+        transform-origin: left center;
+        will-change: transform, opacity;
+    }
+}
+
+.nav-item.active::before {
+    transform: scaleY(1);
+}
+
+/* =====================
+   FILTER CHECKBOX LABELS
+   ===================== */
+
+.filter-checkbox-label {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.375rem 0.5rem;
+    margin: 0 -0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.15s;
+}
+
+.filter-checkbox-label:hover {
+    background-color: #f9fafb;
+}
+
+.filter-checkbox-label input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.filter-checkbox-label .filter-label {
+    font-size: 0.875rem;
+
+    #main-content.fullwidth {
+        margin-left: 0 !important;
+        width: 100% !important;
+        transition: margin-left var(--sidebar-duration) var(--sidebar-ease), width var(--sidebar-duration) var(--sidebar-ease);
+    }
+
+    color: #374151;
+}
+
+.filter-checkbox-label .filter-count {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* File type filter with icon */
+.filter-checkbox-label-icon {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.375rem 0.5rem;
+    margin: 0 -0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.15s;
+}
+
+.filter-checkbox-label-icon:hover {
+    background-color: #f9fafb;
+}
+
+/* =====================
+   DRAG SCROLL
+   ===================== */
+
+.drag-scroll {
+    cursor: grab;
+    user-select: none;
+}
+
+.drag-scroll:active {
+    cursor: grabbing;
+}
+
+/* =====================
+   CUSTOM SCROLLBAR
+   ===================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    cursor: grab;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+    background: #888;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+/* Sidebar-specific scrollbar styling */
+.sidebar nav::-webkit-scrollbar,
+#sidebar nav::-webkit-scrollbar,
+aside nav::-webkit-scrollbar,
+#mobile-sidebar nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar nav::-webkit-scrollbar-track,
+#sidebar nav::-webkit-scrollbar-track,
+aside nav::-webkit-scrollbar-track,
+#mobile-sidebar nav::-webkit-scrollbar-track {
+    background: rgba(127, 29, 29, 0.3);
+    /* Darker red with transparency */
+    border-radius: 3px;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb,
+#sidebar nav::-webkit-scrollbar-thumb,
+aside nav::-webkit-scrollbar-thumb,
+#mobile-sidebar nav::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.6);
+    /* Red matching sidebar theme */
+    border-radius: 3px;
+    cursor: grab;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:hover,
+#sidebar nav::-webkit-scrollbar-thumb:hover,
+aside nav::-webkit-scrollbar-thumb:hover,
+#mobile-sidebar nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.8);
+    /* Brighter red on hover */
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:active,
+#sidebar nav::-webkit-scrollbar-thumb:active,
+aside nav::-webkit-scrollbar-thumb:active,
+#mobile-sidebar nav::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+    background: rgba(185, 28, 28, 0.9);
+    /* Darker red when dragging */
+}
+
+/* Firefox scrollbar for sidebar */
+.sidebar nav,
+#sidebar nav,
+aside nav,
+#mobile-sidebar nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(220, 38, 38, 0.6) rgba(127, 29, 29, 0.3);
+}
+
+/* =====================
+   MODAL STYLES
+   ===================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fade-in-up 0.3s ease-out;
+}
+
+/* =====================
+   BADGE STYLES
+   ===================== */
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+}
+
+.badge-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-primary {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* =====================
+   INPUT STYLES
+   ===================== */
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input-field:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* =====================
+   TOAST NOTIFICATION
+   ===================== */
+
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 60;
+    min-width: 300px;
+    animation: slide-in-right 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast.success {
+    border-left: 4px solid #10b981;
+}
+
+.toast.error {
+    border-left: 4px solid #dc2626;
+}
+
+.toast.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.toast.info {
+    border-left: 4px solid #3b82f6;
+}
+
+/* =====================
+   DARK MODE STYLES
+   ===================== */
+
+.dark {
+    background-color: #1a1a1a;
+    color: #e5e5e5;
+}
+
+.dark body {
+    background-color: #1a1a1a !important;
+}
+
+.dark main,
+.dark .main-content {
+    background-color: #1a1a1a !important;
+}
+
+.dark nav {
+    background-color: #2d2d2d !important;
+}
+
+.dark nav h2,
+.dark nav p,
+.dark nav span,
+.dark nav a {
+    color: #e5e5e5 !important;
+}
+
+.dark nav button {
+    color: #e5e5e5 !important;
+}
+
+.dark nav button:hover {
+    background-color: #404040 !important;
+}
+
+.dark nav input {
+    background-color: #404040 !important;
+    border-color: #555555 !important;
+    color: #e5e5e5 !important;
+}
+
+.dark nav input::placeholder {
+    color: #999999 !important;
+}
+
+/* Dark Mode - Sidebar */
+.dark aside,
+.dark .sidebar,
+.dark aside#sidebar {
+    background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%) !important;
+    border-color: #450a0a !important;
+}
+
+.dark aside nav,
+.dark .sidebar nav {
+    background-color: transparent !important;
+}
+
+.dark aside a,
+.dark .sidebar a,
+.dark aside button,
+.dark .sidebar button {
+    color: #e5e5e5 !important;
+}
+
+.dark aside a:hover,
+.dark .sidebar a:hover,
+.dark aside button:hover,
+.dark .sidebar button:hover {
+    background-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+.dark aside a.active,
+.dark .sidebar a.active {
+    background-color: rgba(220, 38, 38, 0.5) !important;
+    color: #ffffff !important;
+}
+
+/* Dark Mode - Cards & Containers */
+.dark .bg-white {
+    background-color: #2d2d2d !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #1a1a1a !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: #2d2d2d !important;
+}
+
+.dark .text-gray-800,
+.dark .text-gray-900 {
+    color: #e5e5e5 !important;
+}
+
+.dark .text-gray-700 {
+    color: #d4d4d4 !important;
+}
+
+.dark .text-gray-600 {
+    color: #a3a3a3 !important;
+}
+
+.dark .text-gray-500 {
+    color: #999999 !important;
+}
+
+.dark .border-gray-200,
+.dark .border-gray-100 {
+    border-color: #404040 !important;
+}
+
+/* Dark Mode - Filter Labels */
+.dark .filter-checkbox-label .filter-label {
+    color: #e5e5e5 !important;
+}
+
+.dark .filter-checkbox-label .filter-count {
+    color: #a3a3a3 !important;
+}
+
+.dark .filter-checkbox-label:hover {
+    background-color: #3d3d3d !important;
+}
+
+/* Dark Mode - Date Input Fields */
+.dark input[type="date"] {
+    background-color: #3d3d3d !important;
+    border-color: #525252 !important;
+    color: #e5e5e5 !important;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+/* Dark Mode - Modal */
+.dark .modal-content {
+    background-color: #2d2d2d !important;
+}
+
+/* Dark Mode - Input Fields */
+.dark .input-field {
+    background-color: #404040 !important;
+    border-color: #555555 !important;
+    color: #e5e5e5 !important;
+}
+
+.dark .input-field:focus {
+    border-color: #dc2626 !important;
+    background-color: #4d4d4d !important;
+}
+
+.dark .input-field-enhanced {
+    background-color: #404040 !important;
+    border-color: #555555 !important;
+    color: #e5e5e5 !important;
+}
+
+.dark .input-field-enhanced:focus {
+    border-color: #dc2626 !important;
+    background-color: #4d4d4d !important;
+}
+
+/* Dark Mode - Table */
+.dark table {
+    background-color: #2d2d2d !important;
+}
+
+.dark table thead {
+    background-color: #404040 !important;
+}
+
+.dark table th,
+.dark table td {
+    border-color: #404040 !important;
+    color: #e5e5e5 !important;
+}
+
+.dark table tbody tr:hover {
+    background-color: #3a3a3a !important;
+}
+
+/* Dark Mode - Dropdown */
+.dark #notifications-dropdown,
+.dark #profile-dropdown {
+    background-color: #2d2d2d !important;
+    border-color: #404040 !important;
+}
+
+/* Dark Mode - Toast */
+.dark .toast {
+    background-color: #2d2d2d !important;
+    color: #e5e5e5 !important;
+}
+
+/* Dark Mode - Scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* Dark Mode - File Upload Zone */
+.dark .file-upload-zone {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    border-color: #555555;
+}
+
+.dark .file-upload-zone:hover {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, #3a1a1a 0%, #2d2d2d 100%);
+}
+
+/* Dark Mode - Proposal Submission Specific Fixes */
+
+/* Gradient header in dark mode */
+.dark .bg-gradient-to-r {
+    background: linear-gradient(to right, #7f1d1d 0%, #450a0a 100%) !important;
+}
+
+/* White/light backgrounds to dark */
+.dark .bg-white\/90 {
+    background-color: rgba(45, 45, 45, 0.95) !important;
+}
+
+/* Info cards gradient backgrounds */
+.dark .bg-gradient-to-br {
+    background: linear-gradient(to bottom right, #2d2d2d 0%, #1a1a1a 100%) !important;
+}
+
+/* Colored borders for info cards */
+.dark .border-blue-500 {
+    border-color: #3b82f6 !important;
+}
+
+.dark .border-purple-500 {
+    border-color: #a855f7 !important;
+}
+
+.dark .border-green-500 {
+    border-color: #22c55e !important;
+}
+
+.dark .border-indigo-500 {
+    border-color: #6366f1 !important;
+}
+
+.dark .border-teal-500 {
+    border-color: #14b8a6 !important;
+}
+
+.dark .border-red-100 {
+    border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+/* Icon backgrounds in cards */
+.dark .bg-blue-500 {
+    background-color: #3b82f6 !important;
+}
+
+.dark .bg-purple-500 {
+    background-color: #a855f7 !important;
+}
+
+.dark .bg-green-500 {
+    background-color: #22c55e !important;
+}
+
+.dark .bg-indigo-100 {
+    background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+.dark .bg-teal-100 {
+    background-color: rgba(20, 184, 166, 0.2) !important;
+}
+
+.dark .bg-red-100 {
+    background-color: rgba(220, 38, 38, 0.2) !important;
+}
+
+/* Badge backgrounds */
+.dark .bg-purple-100 {
+    background-color: rgba(168, 85, 247, 0.2) !important;
+}
+
+.dark .bg-blue-100 {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.dark .bg-green-100 {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+.dark .bg-yellow-100 {
+    background-color: rgba(234, 179, 8, 0.2) !important;
+}
+
+/* Orange badge for Pending status - keep it lighter in dark mode */
+.dark .bg-orange-200 {
+    background-color: rgba(251, 146, 60, 0.3) !important;
+}
+
+.dark .text-orange-900 {
+    color: #fed7aa !important;
+}
+
+.dark .bg-indigo-200 {
+    background-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+.dark .bg-green-200 {
+    background-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Text colors for badges and labels */
+.dark .text-blue-800 {
+    color: #93c5fd !important;
+}
+
+.dark .text-purple-800 {
+    color: #d8b4fe !important;
+}
+
+.dark .text-green-700,
+.dark .text-green-800 {
+    color: #86efac !important;
+}
+
+.dark .text-yellow-700 {
+    color: #fde047 !important;
+}
+
+.dark .text-indigo-600,
+.dark .text-indigo-700 {
+    color: #a5b4fc !important;
+}
+
+.dark .text-teal-600 {
+    color: #5eead4 !important;
+}
+
+.dark .text-red-800,
+.dark .text-red-600 {
+    color: #fca5a5 !important;
+}
+
+.dark .text-red-100 {
+    color: #fecaca !important;
+}
+
+/* Enhanced buttons in dark mode */
+.dark .btn-primary-enhanced {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.5);
+}
+
+.dark .btn-primary-enhanced:hover {
+    box-shadow: 0 8px 20px 0 rgba(220, 38, 38, 0.6);
+}
+
+.dark .btn-outline-enhanced {
+    background-color: transparent;
+    border-color: #555555;
+    color: #e5e5e5;
+    box-shadow: none;
+}
+
+.dark .btn-outline-enhanced:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: #e5e5e5;
+    color: #ffffff;
+}
+
+/* Checkbox styling */
+.dark .checkbox-enhanced {
+    background-color: #2d2d2d;
+    border-color: transparent;
+}
+
+.dark .checkbox-enhanced:hover {
+    background-color: #404040;
+    border-color: #555555;
+}
+
+.dark .checkbox-label {
+    color: #e5e5e5;
+}
+
+/* Table hover effect */
+.dark .hover\:bg-gradient-to-r:hover {
+    background: linear-gradient(to right, rgba(127, 29, 29, 0.3) 0%, transparent 100%) !important;
+}
+
+/* Hover effects for action buttons */
+.dark .hover\:bg-indigo-200:hover {
+    background-color: rgba(99, 102, 241, 0.35) !important;
+}
+
+.dark .hover\:bg-green-200:hover {
+    background-color: rgba(34, 197, 94, 0.35) !important;
+}
+
+/* =====================
+   RESPONSIVE UTILITIES
+   ===================== */
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translate3d(-100%, 0, 0);
+        position: fixed;
+        z-index: 40;
+        height: 100vh;
+        /* Smooth slide animation with hardware acceleration */
+        transition: transform 300ms ease-in-out,
+            opacity 300ms ease-in-out;
+        /* Optimize mobile sidebar animation performance */
+        -webkit-overflow-scrolling: touch;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        will-change: transform, opacity;
+    }
+
+    .sidebar.show {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+
+    /* Make enhanced inputs more touch-friendly on mobile */
+    .input-field-enhanced {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    /* Stack buttons on mobile */
+    .btn-primary-enhanced,
+    .btn-outline-enhanced {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* =====================
+   SMOOTH TRANSITIONS
+   ===================== */
+
+* {
+    transition-property: color, background-color, border-color;
+    transition-duration: 200ms;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    transition-property: all;
+    transition-duration: 200ms;
+}
